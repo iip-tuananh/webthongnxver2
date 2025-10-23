@@ -1,0 +1,11 @@
+i.zalo {
+
+}
+
+.footer__top__box ul.social li a i.zalo{
+    background-image: url('../../images/zalo.svg');
+    filter: grayscale(1);
+}
+.footer__top__box ul.social li a:hover i.zalo{
+    filter: grayscale(0);
+}

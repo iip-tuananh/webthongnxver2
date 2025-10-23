@@ -1,0 +1,30 @@
+
+
+.navbar__openAccount {
+    display: flex;
+    align-items: center;
+    height: 4.64286em;
+    margin-left: 18px;
+  }
+  @media (min-width: 992px) {
+    .navbar__openAccount {
+      display: none;
+    }
+  }
+  .navbar__openAccount i {
+    width: 14px;
+    height: 14px;
+  }
+  .navbar__openAccount span {
+    margin-left: 6px;
+    font-size: 12px;
+    color: #fff;
+  }
+  @media (max-width: 991px) {
+    .navbar__hotline span {
+      display: none !important;
+    }
+    .mobile__top li.openAccount {
+      display: none;
+    }
+  }

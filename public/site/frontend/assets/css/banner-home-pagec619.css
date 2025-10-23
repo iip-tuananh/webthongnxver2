@@ -1,0 +1,18 @@
+@media (max-width: 575.98px) {
+    .sBanner__item__link {
+        min-width: inherit;
+        font-size: 0.525rem;
+        padding: .5em .75em;
+        bottom: -1.25em;
+    }
+    .sBanner__item__link:before {
+        line-height: 2.5;
+    }
+    .sBanner__item__content {
+        padding: 1em;
+        max-width: 60%;
+    }
+    .sBanner__item__title:before {
+        left: -1em;
+    }
+}

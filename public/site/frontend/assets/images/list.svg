@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.187 11">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: red;
+      }
+    </style>
+  </defs>
+  <g id="Group_156" data-name="Group 156" transform="translate(0 0)">
+    <path id="Path_59" data-name="Path 59" class="cls-1" d="M13.424,6.937h8.9a.4.4,0,1,0,0-.793h-8.9a.4.4,0,0,0,0,.793Z" transform="translate(-10.538 -5.676)"/>
+    <path id="Path_60" data-name="Path 60" class="cls-1" d="M22.329,30.03h-8.9a.4.4,0,0,0,0,.793h8.9a.4.4,0,1,0,0-.793Z" transform="translate(-10.538 -24.923)"/>
+    <path id="Path_61" data-name="Path 61" class="cls-1" d="M22.329,53.965h-8.9a.4.4,0,0,0,0,.793h8.9a.4.4,0,1,0,0-.793Z" transform="translate(-10.538 -44.21)"/>
+    <path id="Path_62" data-name="Path 62" class="cls-1" d="M1.057,5.429a.848.848,0,1,0-.848-.848.848.848,0,0,0,.848.848Z" transform="translate(-0.209 -3.733)"/>
+    <path id="Path_63" data-name="Path 63" class="cls-1" d="M1.057,29.29a.848.848,0,1,0-.848-.848.848.848,0,0,0,.848.848Z" transform="translate(-0.209 -22.959)"/>
+    <path id="Path_64" data-name="Path 64" class="cls-1" d="M1.056,51.633a.849.849,0,1,0,.848.849.848.848,0,0,0-.848-.849Z" transform="translate(-0.207 -42.33)"/>
+  </g>
+</svg>

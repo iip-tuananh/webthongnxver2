@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12.754 12.343">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: red;
+      }
+    </style>
+  </defs>
+  <g id="bars" transform="translate(0 -8.2)">
+    <g id="Group_185" data-name="Group 185" transform="translate(1.296 8.2)">
+      <g id="Group_184" data-name="Group 184" transform="translate(0 0)">
+        <path id="Path_73" data-name="Path 73" class="cls-1" d="M59.767,8.2v.412h.738L56.27,12.847l-2.056-2.059L51.6,13.4l.289.291,2.325-2.322,2.056,2.056L60.8,8.9v.736h.412V8.2Z" transform="translate(-51.6 -8.2)"/>
+      </g>
+    </g>
+    <g id="Group_187" data-name="Group 187" transform="translate(0 11.08)">
+      <g id="Group_186" data-name="Group 186">
+        <path id="Path_74" data-name="Path 74" class="cls-1" d="M12.343,131.951h0V122.9H10.286v9.051H9.875v-7.816H7.818v7.818H7.407v-4.939H5.348v4.936H4.936V125.78H2.88v6.171H2.468v-2.88H.412v2.88H0v.412H12.754v-.412Zm-10.284,0H.824v-2.468H2.059Zm2.468,0H3.292v-5.76H4.527Zm2.468,0H5.76v-4.527H6.995Zm2.468,0H8.228v-7.407H9.463Zm2.471,0H10.7v-8.639h1.235Z" transform="translate(0 -122.9)"/>
+      </g>
+    </g>
+  </g>
+</svg>
