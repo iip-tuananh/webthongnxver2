@@ -81,48 +81,48 @@
 			</div>
 		</div>
 
-{{--		<div class="card">--}}
-{{--			<div class="card-header d-flex align-items-center">--}}
-{{--				<h6 class="mb-0">Chọn vai trò</h6>--}}
-{{--				<div class="text-danger ml-1">(*)</div>--}}
-{{--			</div>--}}
-{{--			<div class="card-body">--}}
-{{--				<div class="row">--}}
-{{--					<div class="col-md-6">--}}
-{{--						<ui-select remove-selected="false" multiple ng-model="form.roles">--}}
-{{--							<ui-select-match placeholder="Chọn vai trò">--}}
-{{--								<% $item.name %>--}}
-{{--							</ui-select-match>--}}
-{{--							<ui-select-choices repeat="item.id as item in (form.all_roles | filter: $select.search)">--}}
-{{--								<span ng-bind="item.name"></span>--}}
-{{--							</ui-select-choices>--}}
-{{--						</ui-select>--}}
-{{--						<span class="invalid-feedback d-block" role="alert">--}}
-{{--							<strong><% errors.roles[0] %></strong>--}}
-{{--						</span>--}}
-{{--					</div>--}}
-{{--				</div>--}}
-
-{{--			</div>--}}
-{{--		</div>--}}
-	</div>
-	<div class="col-md-3">
 		<div class="card">
-			<div class="card-header">
-				<h6>Ảnh đại diện</h6>
+			<div class="card-header d-flex align-items-center">
+				<h6 class="mb-0">Chọn vai trò</h6>
+				<div class="text-danger ml-1">(*)</div>
 			</div>
 			<div class="card-body">
-				<div class="img-chooser">
-					<label for="<% form.image.element_id %>">
-						<img ng-src="<% form.image.path %>">
-						<input class="d-none" type="file" accept=".jpg,.png,.jpeg" id="<% form.image.element_id %>">
-					</label>
+				<div class="row">
+					<div class="col-md-6">
+						<ui-select remove-selected="false" multiple ng-model="form.roles">
+							<ui-select-match placeholder="Chọn vai trò">
+								<% $item.name %>
+							</ui-select-match>
+							<ui-select-choices repeat="item.id as item in (form.all_roles | filter: $select.search)">
+								<span ng-bind="item.name"></span>
+							</ui-select-choices>
+						</ui-select>
+						<span class="invalid-feedback d-block" role="alert">
+							<strong><% errors.roles[0] %></strong>
+						</span>
+					</div>
 				</div>
-				<span class="invalid-feedback d-block" role="alert">
-					<strong><% errors['image'][0] %></strong>
-				</span>
+
 			</div>
 		</div>
+	</div>
+	<div class="col-md-3">
+{{--		<div class="card">--}}
+{{--			<div class="card-header">--}}
+{{--				<h6>Ảnh đại diện</h6>--}}
+{{--			</div>--}}
+{{--			<div class="card-body">--}}
+{{--				<div class="img-chooser">--}}
+{{--					<label for="<% form.image.element_id %>">--}}
+{{--						<img ng-src="<% form.image.path %>">--}}
+{{--						<input class="d-none" type="file" accept=".jpg,.png,.jpeg" id="<% form.image.element_id %>">--}}
+{{--					</label>--}}
+{{--				</div>--}}
+{{--				<span class="invalid-feedback d-block" role="alert">--}}
+{{--					<strong><% errors['image'][0] %></strong>--}}
+{{--				</span>--}}
+{{--			</div>--}}
+{{--		</div>--}}
 		<div class="card">
 			<div class="card-header">
 				<h6>Thông tin khác</h6>

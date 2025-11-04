@@ -9,8 +9,7 @@ Danh sách chức vụ
 
 @section('buttons')
 <a href="{{ route('Role.create') }}" class="btn btn-outline-success"><i class="fa fa-plus"></i> Thêm mới</a>
-<a href="{{ route('Role.create') }}" class="btn btn-primary"><i class="fas fa-file-excel"></i> Xuất file excel</a>
-<a href="{{ route('Role.create') }}" class="btn btn-primary"><i class="far fa-file-pdf"></i> Xuất file pdf</a>
+
 @endsection
 
 @section('content')

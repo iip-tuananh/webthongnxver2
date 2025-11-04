@@ -19921,7 +19921,7 @@ div[class*="col-"]:nth-child(5) .service:before {
     position: relative;
     z-index: 2;
     display: inline-block;
-    margin-top: .92857em;
+    /*margin-top: .92857em;*/
     transition-delay: .15s;
     transition: all .2s ease-in-out
 }
@@ -19933,7 +19933,8 @@ div[class*="col-"]:nth-child(5) .service:before {
 }
 
 .navbar-brand img {
-    height: 5.21429em
+    /*height: 5.21429em*/
+    height: 5.0429em
 }
 
 @media (min-width: 992px) {

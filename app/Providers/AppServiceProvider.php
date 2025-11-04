@@ -6,6 +6,7 @@ use App\Http\View\Composers\HeaderComposer;
 use App\Http\View\Composers\MenuHomePageComposer;
 use App\Model\Admin\Banner;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Schema; //SoftDelete
 use Illuminate\Support\Facades\View;
@@ -71,5 +72,32 @@ class AppServiceProvider extends ServiceProvider
             'site.layouts.master',
             HeaderComposer::class
         );
+
+        Blade::if('admincan', function ($permissions, bool $requireAll = false) {
+            $user = Auth::guard('admin')->user();
+            if (!$user) return false;
+
+            $list = is_array($permissions)
+                ? $permissions
+                : preg_split('/[|,]/', (string) $permissions, -1, PREG_SPLIT_NO_EMPTY);
+
+
+            $list = array_values(array_filter(array_map('trim', $list)));
+
+            if (empty($list)) return false;
+
+            if ($requireAll) {
+                foreach ($list as $perm) {
+                    if (!$user->can($perm)) return false;
+                }
+                return true;
+            }
+
+            foreach ($list as $perm) {
+                if ($user->can($perm)) return true;
+            }
+            return false;
+        });
+
     }
 }

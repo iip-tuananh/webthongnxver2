@@ -12,7 +12,7 @@ Route::prefix('admin')
             Route::post('/login', 'Auth\LoginController@login')->name('login.submit');
         });
 
-        Route::middleware('auth:admin')->group(function () {
+        Route::middleware(['auth:admin', 'user.active'])->group(function () {
             Route::get('dang-xuat','Auth\LoginController@logout')->name('logout');
             Route::get('/login-page',function() {
                 return view('layouts.login');
@@ -28,9 +28,9 @@ Route::prefix('admin')
             })->name('index');
 
             // Cấu hình chung
-            Route::group(['prefix' => 'configs', 'middleware' => 'checkPermission:Cập nhật cấu hình'], function () {
-                Route::get('/', 'Admin\ConfigController@edit')->name('Config.edit')->middleware('checkPermission:Cập nhật cấu hình');
-                Route::post('/update', 'Admin\ConfigController@update')->name('Config.update')->middleware('checkPermission:Cập nhật cấu hình');
+            Route::group(['prefix' => 'configs'], function () {
+                Route::get('/', 'Admin\ConfigController@edit')->name('Config.edit')->middleware('checkPermission:Cấu hình thông tin hệ thống');
+                Route::post('/update', 'Admin\ConfigController@update')->name('Config.update')->middleware('checkPermission:Cấu hình thông tin hệ thống');
             });
 
             // spa
@@ -185,16 +185,16 @@ Route::prefix('admin')
             });
 
             Route::group(['prefix' => 'post-categories'], function() {
-                Route::get('/create', 'Admin\PostCategoryController@create')->name('PostCategory.create');
-                Route::post('/', 'Admin\PostCategoryController@store')->name('PostCategory.store');
-                Route::post('/{id}/update', 'Admin\PostCategoryController@update')->name('PostCategory.update');
-                Route::get('/{id}/edit', 'Admin\PostCategoryController@edit')->name('PostCategory.edit');
-                Route::get('/{id}/getDataForEdit', 'Admin\PostCategoryController@getDataForEdit');
-                Route::get('/{id}/delete', 'Admin\PostCategoryController@delete')->name('PostCategory.delete');
+                Route::get('/create', 'Admin\PostCategoryController@create')->name('PostCategory.create')->middleware('checkPermission:Quản lý danh mục bài viết');
+                Route::post('/', 'Admin\PostCategoryController@store')->name('PostCategory.store')->middleware('checkPermission:Quản lý danh mục bài viết');
+                Route::post('/{id}/update', 'Admin\PostCategoryController@update')->name('PostCategory.update')->middleware('checkPermission:Quản lý danh mục bài viết');
+                Route::get('/{id}/edit', 'Admin\PostCategoryController@edit')->name('PostCategory.edit')->middleware('checkPermission:Quản lý danh mục bài viết');
+                Route::get('/{id}/getDataForEdit', 'Admin\PostCategoryController@getDataForEdit')->middleware('checkPermission:Quản lý danh mục bài viết');
+                Route::get('/{id}/delete', 'Admin\PostCategoryController@delete')->name('PostCategory.delete')->middleware('checkPermission:Quản lý danh mục bài viết');
                 Route::get('/', 'Admin\PostCategoryController@index')->name('PostCategory.index');
-                Route::get('/searchData', 'Admin\PostCategoryController@searchData')->name('PostCategory.searchData');
-                Route::post('/nested-sort', 'Admin\PostCategoryController@nestedSort')->name('PostCategory.nestedSort');
-                Route::post('/add-home-page', 'Admin\PostCategoryController@addToHomepage')->name('PostCategory.add.home.page');
+                Route::get('/searchData', 'Admin\PostCategoryController@searchData')->name('PostCategory.searchData')->middleware('checkPermission:Quản lý danh mục bài viết');
+                Route::post('/nested-sort', 'Admin\PostCategoryController@nestedSort')->name('PostCategory.nestedSort')->middleware('checkPermission:Quản lý danh mục bài viết');
+                Route::post('/add-home-page', 'Admin\PostCategoryController@addToHomepage')->name('PostCategory.add.home.page')->middleware('checkPermission:Quản lý danh mục bài viết');
             });
 
             Route::group(['prefix' => 'project-categories'], function() {
@@ -275,13 +275,13 @@ Route::prefix('admin')
                 Route::post('/add-home-page', 'Admin\AboutCategoryController@addToHomepage')->name('aboutCategory.add.home.page');
             });
 
-            Route::group(['prefix' => 'abouts'], function () {
-                Route::get('/', 'Admin\AboutController@index')->name('abouts.index');
-                Route::get('/show', 'Admin\AboutController@show')->name('abouts.show');
-                Route::get('/getData', 'Admin\AboutController@getData')->name('abouts.getData');
-                Route::post('/update', 'Admin\AboutController@update')->name('abouts.update');
-                Route::get('/edit', 'Admin\AboutController@edit')->name('abouts.edit');
-            });
+//            Route::group(['prefix' => 'abouts'], function () {
+//                Route::get('/', 'Admin\AboutController@index')->name('abouts.index');
+//                Route::get('/show', 'Admin\AboutController@show')->name('abouts.show');
+//                Route::get('/getData', 'Admin\AboutController@getData')->name('abouts.getData');
+//                Route::post('/update', 'Admin\AboutController@update')->name('abouts.update');
+//                Route::get('/edit', 'Admin\AboutController@edit')->name('abouts.edit');
+//            });
 
             Route::group(['prefix' => 'about-page'], function () {
                 Route::post('/update', 'Admin\AboutPageController@update')->name('aboutPage.update');
@@ -299,10 +299,10 @@ Route::prefix('admin')
 
             // danh mục liên hệ
             Route::group(['prefix' => 'contacts'], function () {
-                Route::get('/', 'Admin\ContactController@index')->name('contacts.index');
-                Route::get('/searchData', 'Admin\ContactController@searchData')->name('contacts.searchData');
-                Route::get('/{id}/detail', 'Admin\ContactController@getContactDetail')->name('contacts.detail');
-                Route::get('/{id}/delete', 'Admin\ContactController@delete')->name('contacts.delete');
+                Route::get('/', 'Admin\ContactController@index')->name('contacts.index')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/searchData', 'Admin\ContactController@searchData')->name('contacts.searchData')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/detail', 'Admin\ContactController@getContactDetail')->name('contacts.detail')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/delete', 'Admin\ContactController@delete')->name('contacts.delete')->middleware('checkPermission:Quản lý các danh mục khác');
             });
 
             Route::group(['prefix' => 'apply-recruitments'], function () {
@@ -434,15 +434,15 @@ Route::prefix('admin')
 
             // đối tác
             Route::group(['prefix' => 'partners'], function () {
-                Route::get('/', 'Admin\PartnerController@index')->name('partners.index');
-                Route::get('/searchData', 'Admin\PartnerController@searchData')->name('partners.searchData');
-                Route::get('/{id}/show', 'Admin\PartnerController@show')->name('partners.show');
-                Route::get('/create', 'Admin\PartnerController@create')->name('partners.create');
-                Route::post('/', 'Admin\PartnerController@store')->name('partners.store');
-                Route::post('/{id}/update', 'Admin\PartnerController@update')->name('partners.update');
-                Route::get('/{id}/delete', 'Admin\PartnerController@delete')->name('partners.delete');
-                Route::get('/{id}/getDataForEdit', 'Admin\PartnerController@getDataForEdit');
-                Route::get('/exportExcel','Admin\PartnerController@exportExcel')->name('partners.exportExcel');
+                Route::get('/', 'Admin\PartnerController@index')->name('partners.index')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/searchData', 'Admin\PartnerController@searchData')->name('partners.searchData')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/show', 'Admin\PartnerController@show')->name('partners.show')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/create', 'Admin\PartnerController@create')->name('partners.create')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::post('/', 'Admin\PartnerController@store')->name('partners.store')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::post('/{id}/update', 'Admin\PartnerController@update')->name('partners.update')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/delete', 'Admin\PartnerController@delete')->name('partners.delete')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/getDataForEdit', 'Admin\PartnerController@getDataForEdit')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/exportExcel','Admin\PartnerController@exportExcel')->name('partners.exportExcel')->middleware('checkPermission:Quản lý các danh mục khác');
             });
 
             // cấu hình số liệu thống kê
@@ -510,11 +510,11 @@ Route::prefix('admin')
 
             // ql đơn hàng
             Route::group(['prefix' => 'orders'], function () {
-                Route::get('/', 'Admin\OrderController@index')->name('orders.index');
-                Route::get('/searchData', 'Admin\OrderController@searchData')->name('orders.searchData');
-                Route::get('/{id}/show', 'Admin\OrderController@show')->name('orders.show');
-                Route::get('/{id}/delete', 'Admin\OrderController@delete')->name('orders.delete');
-                Route::post('/update-status','Admin\OrderController@updateStatus')->name('orders.update.status');
+                Route::get('/', 'Admin\OrderController@index')->name('orders.index')->middleware('checkPermission:Quản lý giao dịch');
+                Route::get('/searchData', 'Admin\OrderController@searchData')->name('orders.searchData')->middleware('checkPermission:Quản lý giao dịch');
+                Route::get('/{id}/show', 'Admin\OrderController@show')->name('orders.show')->middleware('checkPermission:Quản lý giao dịch');
+                Route::get('/{id}/delete', 'Admin\OrderController@delete')->name('orders.delete')->middleware('checkPermission:Quản lý giao dịch');
+                Route::post('/update-status','Admin\OrderController@updateStatus')->name('orders.update.status')->middleware('checkPermission:Quản lý giao dịch');
             });
 
             // ql đơn thiết kế
@@ -527,47 +527,47 @@ Route::prefix('admin')
 
 
             Route::group(['prefix' => 'commissions'], function () {
-                Route::get('/', 'Admin\CommissionController@index')->name('commissions.index');
-                Route::get('/searchData', 'Admin\CommissionController@searchData')->name('commissions.searchData');
-                Route::get('/{id}/show', 'Admin\CommissionController@show')->name('commissions.show');
-                Route::get('/{id}/delete', 'Admin\CommissionController@delete')->name('commissions.delete');
-                Route::post('/update-status','Admin\CommissionController@updateStatus')->name('commissions.update.status');
+                Route::get('/', 'Admin\CommissionController@index')->name('commissions.index')->middleware('checkPermission:Quản lý giao dịch');
+                Route::get('/searchData', 'Admin\CommissionController@searchData')->name('commissions.searchData')->middleware('checkPermission:Quản lý giao dịch');
+                Route::get('/{id}/show', 'Admin\CommissionController@show')->name('commissions.show')->middleware('checkPermission:Quản lý giao dịch');
+                Route::get('/{id}/delete', 'Admin\CommissionController@delete')->name('commissions.delete')->middleware('checkPermission:Quản lý giao dịch');
+                Route::post('/update-status','Admin\CommissionController@updateStatus')->name('commissions.update.status')->middleware('checkPermission:Quản lý giao dịch');
             });
 
 
             // banner trang chủ
             Route::group(['prefix' => 'banner'], function () {
-                Route::get('/', 'Admin\BannerController@index')->name('banners.index');
-                Route::get('/searchData', 'Admin\BannerController@searchData')->name('banners.searchData');
-                Route::get('/{id}/show', 'Admin\BannerController@show')->name('banners.show');
-                Route::get('/create', 'Admin\BannerController@create')->name('banners.create');
-                Route::post('/', 'Admin\BannerController@store')->name('banners.store');
-                Route::post('/{id}/update', 'Admin\BannerController@update')->name('banners.update');
-                Route::get('/{id}/delete', 'Admin\BannerController@delete')->name('banners.delete');
-                Route::get('/{id}/getDataForEdit', 'Admin\BannerController@getDataForEdit')->name('banners.getDataForEdit');
+                Route::get('/', 'Admin\BannerController@index')->name('banners.index')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/searchData', 'Admin\BannerController@searchData')->name('banners.searchData')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/show', 'Admin\BannerController@show')->name('banners.show')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/create', 'Admin\BannerController@create')->name('banners.create')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::post('/', 'Admin\BannerController@store')->name('banners.store')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::post('/{id}/update', 'Admin\BannerController@update')->name('banners.update')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/delete', 'Admin\BannerController@delete')->name('banners.delete')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/getDataForEdit', 'Admin\BannerController@getDataForEdit')->name('banners.getDataForEdit')->middleware('checkPermission:Quản lý các danh mục khác');
             });
 
             Route::group(['prefix' => 'banner-page'], function () {
-                Route::get('/', 'Admin\BannerPageController@index')->name('bannerPages.index');
-                Route::get('/searchData', 'Admin\BannerPageController@searchData')->name('bannerPages.searchData');
-                Route::get('/{id}/show', 'Admin\BannerPageController@show')->name('bannerPages.show');
-                Route::get('/create', 'Admin\BannerPageController@create')->name('bannerPages.create');
-                Route::post('/', 'Admin\BannerPageController@store')->name('bannerPages.store');
-                Route::post('/{id}/update', 'Admin\BannerPageController@update')->name('bannerPages.update');
-                Route::get('/{id}/delete', 'Admin\BannerPageController@delete')->name('bannerPages.delete');
-                Route::get('/{id}/getDataForEdit', 'Admin\BannerPageController@getDataForEdit')->name('bannerPages.getDataForEdit');
+                Route::get('/', 'Admin\BannerPageController@index')->name('bannerPages.index')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/searchData', 'Admin\BannerPageController@searchData')->name('bannerPages.searchData')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/show', 'Admin\BannerPageController@show')->name('bannerPages.show')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/create', 'Admin\BannerPageController@create')->name('bannerPages.create')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::post('/', 'Admin\BannerPageController@store')->name('bannerPages.store')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::post('/{id}/update', 'Admin\BannerPageController@update')->name('bannerPages.update')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/delete', 'Admin\BannerPageController@delete')->name('bannerPages.delete')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/getDataForEdit', 'Admin\BannerPageController@getDataForEdit')->name('bannerPages.getDataForEdit')->middleware('checkPermission:Quản lý các danh mục khác');
             });
 
-            Route::group(['prefix' => 'business'], function () {
-                Route::get('/', 'Admin\BusinessController@index')->name('business.index');
-                Route::get('/searchData', 'Admin\BusinessController@searchData')->name('business.searchData');
-                Route::get('/{id}/show', 'Admin\BusinessController@show')->name('business.show');
-                Route::get('/create', 'Admin\BusinessController@create')->name('business.create');
-                Route::post('/', 'Admin\BusinessController@store')->name('business.store');
-                Route::post('/{id}/update', 'Admin\BusinessController@update')->name('business.update');
-                Route::get('/{id}/delete', 'Admin\BusinessController@delete')->name('business.delete');
-                Route::get('/{id}/getDataForEdit', 'Admin\BusinessController@getDataForEdit')->name('business.getDataForEdit');
-            });
+//            Route::group(['prefix' => 'business'], function () {
+//                Route::get('/', 'Admin\BusinessController@index')->name('business.index');
+//                Route::get('/searchData', 'Admin\BusinessController@searchData')->name('business.searchData');
+//                Route::get('/{id}/show', 'Admin\BusinessController@show')->name('business.show');
+//                Route::get('/create', 'Admin\BusinessController@create')->name('business.create');
+//                Route::post('/', 'Admin\BusinessController@store')->name('business.store');
+//                Route::post('/{id}/update', 'Admin\BusinessController@update')->name('business.update');
+//                Route::get('/{id}/delete', 'Admin\BusinessController@delete')->name('business.delete');
+//                Route::get('/{id}/getDataForEdit', 'Admin\BusinessController@getDataForEdit')->name('business.getDataForEdit');
+//            });
 
 //            Route::group(['prefix' => 'achievements'], function () {
 //                Route::get('/', 'Admin\AchievementController@index')->name('achievements.index');
@@ -625,12 +625,12 @@ Route::prefix('admin')
             });
 
             Route::group(['prefix' => 'customers'], function () {
-                Route::get('/', 'Admin\CustomerController@index')->name('customers.index');
-                Route::get('/searchData', 'Admin\CustomerController@searchData')->name('customers.searchData');
-                Route::get('/searchDataPost', 'Admin\CustomerController@searchDataPost')->name('customers.searchDataPost');
-                Route::get('/{id}/show', 'Admin\CustomerController@show')->name('customers.show');
-                Route::post('/{id}/update', 'Admin\CustomerController@update')->name('customers.update');
-                Route::post('/update-status','Admin\CustomerController@updateStatus')->name('customers.update.status');
+                Route::get('/', 'Admin\CustomerController@index')->name('customers.index')->middleware('checkPermission:Quản lý giao dịch');
+                Route::get('/searchData', 'Admin\CustomerController@searchData')->name('customers.searchData')->middleware('checkPermission:Quản lý giao dịch');
+                Route::get('/searchDataPost', 'Admin\CustomerController@searchDataPost')->name('customers.searchDataPost')->middleware('checkPermission:Quản lý giao dịch');
+                Route::get('/{id}/show', 'Admin\CustomerController@show')->name('customers.show')->middleware('checkPermission:Quản lý giao dịch');
+                Route::post('/{id}/update', 'Admin\CustomerController@update')->name('customers.update')->middleware('checkPermission:Quản lý giao dịch');
+                Route::post('/update-status','Admin\CustomerController@updateStatus')->name('customers.update.status')->middleware('checkPermission:Quản lý giao dịch');
             });
             // quản lý cửa hàng
             Route::group(['prefix' => 'stores'], function () {
@@ -647,15 +647,15 @@ Route::prefix('admin')
 
             // quản lý chính sách
             Route::group(['prefix' => 'policies'], function () {
-                Route::get('/', 'Admin\PolicyController@index')->name('policies.index');
-                Route::get('/searchData', 'Admin\PolicyController@searchData')->name('policies.searchData');
-                Route::get('/{id}/show', 'Admin\PolicyController@show')->name('policies.show');
-                Route::get('/{id}/edit', 'Admin\PolicyController@edit')->name('policies.edit');
-                Route::get('/create', 'Admin\PolicyController@create')->name('policies.create');
-                Route::post('/', 'Admin\PolicyController@store')->name('policies.store');
-                Route::post('/{id}/update', 'Admin\PolicyController@update')->name('policies.update');
-                Route::get('/{id}/delete', 'Admin\PolicyController@delete')->name('policies.delete');
-                Route::get('/{id}/getDataForEdit', 'Admin\PolicyController@getDataForEdit');
+                Route::get('/', 'Admin\PolicyController@index')->name('policies.index')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/searchData', 'Admin\PolicyController@searchData')->name('policies.searchData')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/show', 'Admin\PolicyController@show')->name('policies.show')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/edit', 'Admin\PolicyController@edit')->name('policies.edit')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/create', 'Admin\PolicyController@create')->name('policies.create')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::post('/', 'Admin\PolicyController@store')->name('policies.store')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::post('/{id}/update', 'Admin\PolicyController@update')->name('policies.update')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/delete', 'Admin\PolicyController@delete')->name('policies.delete')->middleware('checkPermission:Quản lý các danh mục khác');
+                Route::get('/{id}/getDataForEdit', 'Admin\PolicyController@getDataForEdit')->middleware('checkPermission:Quản lý các danh mục khác');
             });
 
             // Service Types
@@ -670,13 +670,13 @@ Route::prefix('admin')
 
             // Service
             Route::group(['prefix' => 'services'], function () {
-                Route::get('/', 'Admin\ServiceController@index')->name('services.index');
-                Route::get('/create', 'Admin\ServiceController@create')->name('services.create');
-                Route::get('/searchData', 'Admin\ServiceController@searchData')->name('services.searchData');
-                Route::post('/', 'Admin\ServiceController@store')->name('services.store');
-                Route::get('/{id}/edit', 'Admin\ServiceController@edit')->name('services.edit');
-                Route::post('/{id}/update', 'Admin\ServiceController@update')->name('services.update');
-                Route::get('/{id}/delete', 'Admin\ServiceController@delete')->name('services.delete');
+                Route::get('/', 'Admin\ServiceController@index')->name('services.index')->middleware('checkPermission:Quản lý dịch vụ');
+                Route::get('/create', 'Admin\ServiceController@create')->name('services.create')->middleware('checkPermission:Quản lý dịch vụ');
+                Route::get('/searchData', 'Admin\ServiceController@searchData')->name('services.searchData')->middleware('checkPermission:Quản lý dịch vụ');
+                Route::post('/', 'Admin\ServiceController@store')->name('services.store')->middleware('checkPermission:Quản lý dịch vụ');
+                Route::get('/{id}/edit', 'Admin\ServiceController@edit')->name('services.edit')->middleware('checkPermission:Quản lý dịch vụ');
+                Route::post('/{id}/update', 'Admin\ServiceController@update')->name('services.update')->middleware('checkPermission:Quản lý dịch vụ');
+                Route::get('/{id}/delete', 'Admin\ServiceController@delete')->name('services.delete')->middleware('checkPermission:Quản lý dịch vụ');
             });
 
 
@@ -696,26 +696,32 @@ Route::prefix('admin')
                 Route::get('/{id}/checkprint','G7\BillController@checkPrint');
 
                 // Role Uptek
-                Route::group(['prefix' => 'roles', 'middleware' => 'checkType:'.User::SUPER_ADMIN.','.User::QUAN_TRI_VIEN], function () {
-                    Route::get('/create', 'Common\RoleController@create')->name('Role.create')->middleware('checkPermission:Quản lý chức vụ');
-                    Route::post('/', 'Common\RoleController@store')->name('Role.store')->middleware('checkPermission:Quản lý chức vụ');
-                    Route::get('/', 'Common\RoleController@index')->name('Role.index');
-                    Route::get('/{id}/edit', 'Common\RoleController@edit')->name('Role.edit')->middleware('checkPermission:Quản lý chức vụ');
-                    Route::get('/{id}/delete', 'Common\RoleController@delete')->name('Role.delete')->middleware('checkPermission:Quản lý chức vụ');
-                    Route::post('/{id}/update', 'Common\RoleController@update')->name('Role.update')->middleware('checkPermission:Quản lý chức vụ');
+                Route::group(['prefix' => 'roles'], function () {
+                    Route::get('/create', 'Common\RoleController@create')->name('Role.create')->middleware('checkPermission:Quản lý người dùng hệ thống');
+                    Route::post('/', 'Common\RoleController@store')->name('Role.store')->middleware('checkPermission:Quản lý người dùng hệ thống');
+                    Route::get('/', 'Common\RoleController@index')->name('Role.index')->middleware('checkPermission:Quản lý người dùng hệ thống');
+                    Route::get('/{id}/edit', 'Common\RoleController@edit')->name('Role.edit')->middleware('checkPermission:Quản lý người dùng hệ thống');
+                    Route::get('/{id}/delete', 'Common\RoleController@delete')->name('Role.delete')->middleware('checkPermission:Quản lý người dùng hệ thống');
+                    Route::post('/{id}/update', 'Common\RoleController@update')->name('Role.update')->middleware('checkPermission:Quản lý người dùng hệ thống');
                     Route::get('/searchData', 'Common\RoleController@searchData')->name('Role.searchData');
                 });
 
-                Route::group(['prefix' => 'users', 'middleware' => 'checkType:'.User::SUPER_ADMIN.','.User::QUAN_TRI_VIEN], function () {
-                    Route::get('/create', 'Common\UserController@create')->name('User.create');
-                    Route::post('/', 'Common\UserController@store')->name('User.store');
+                Route::group(['prefix' => 'users'], function () {
+                    Route::get('/create', 'Common\UserController@create')->name('User.create')->middleware('checkPermission:Quản lý người dùng hệ thống');
+                    Route::post('/', 'Common\UserController@store')->name('User.store')->middleware('checkPermission:Quản lý người dùng hệ thống');
                     Route::get('/', 'Common\UserController@index')->name('User.index');
-                    Route::get('/{id}/edit', 'Common\UserController@edit')->name('User.edit');
-                    Route::get('/{id}/delete', 'Common\UserController@delete')->name('User.delete');
-                    Route::post('/{id}/update', 'Common\UserController@update')->name('User.update');
+                    Route::get('/{id}/edit', 'Common\UserController@edit')->name('User.edit')->middleware('checkPermission:Quản lý người dùng hệ thống');
+                    Route::get('/{id}/delete', 'Common\UserController@delete')->name('User.delete')->middleware('checkPermission:Quản lý người dùng hệ thống');
+                    Route::post('/{id}/update', 'Common\UserController@update')->name('User.update')->middleware('checkPermission:Quản lý người dùng hệ thống');
                     Route::get('/searchData', 'Common\UserController@searchData')->name('User.searchData');
                     Route::get('/exportExcel','Common\UserController@exportExcel')->name('User.exportExcel');
                     Route::get('/exportPdf','Common\UserController@exportPDF')->name('User.exportPDF');
+                });
+
+
+                Route::group(['prefix' => 'account'], function () {
+                    Route::get('/{id}/edit', 'Common\UserController@editAccount')->name('Account.edit');
+                    Route::post('/{id}/update', 'Common\UserController@update')->name('User.update');
                 });
 
 

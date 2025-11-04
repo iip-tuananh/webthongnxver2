@@ -60,9 +60,7 @@ Danh sách người dùng
 			// 	column_data: USER_TYPES,
 			// },
 		],
-		@if(Auth::user()->type == App\Model\Common\User::SUPER_ADMIN || Auth::user()->type == App\Model\Common\User::QUAN_TRI_VIEN)
-		// create_link: "{{ route('User.create') }}"
-		@endif
+        create_link: "{{ route('User.create') }}"
 	});
 
 </script>

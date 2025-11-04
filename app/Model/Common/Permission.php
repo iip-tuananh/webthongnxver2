@@ -17,8 +17,8 @@ class Permission extends BasePermission
 
     public static function createRecord($data, $types) {
         $object = self::create($data);
-        foreach($types as $type) {
-            PermissionHasType::create(['permission_id' => $object->id, 'type' => $type]);
-        }
+//        foreach($types as $type) {
+//            PermissionHasType::create(['permission_id' => $object->id, 'type' => $type]);
+//        }
     }
 }

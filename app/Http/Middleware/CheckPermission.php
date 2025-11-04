@@ -16,13 +16,13 @@ class CheckPermission
      */
     public function handle($request, Closure $next, $permission)
     {
-        if (Auth::user() && Auth::user()->can($permission) || Auth::user()->id == 1) {
+        $user = $request->user();
+
+        if ($user && $user->can($permission) ) {
             return $next($request);
-        } else {
-			if ($request->ajax()){
-                return errorResponse("Không có quyền!");
-            }
-            return response()->view('not_found');
         }
+        return $request->expectsJson()
+            ? response()->json(['message' => 'Không có quyền!'], 403)
+            : abort(403, 'Không có quyền!');
     }
 }

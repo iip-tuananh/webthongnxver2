@@ -1,31 +1,31 @@
 <footer class="footer">
 
-    <div class="footer__widgets">
-        <div class="container">
-            <div class="footer__widgets__content">
-                <div class="row">
-                    @foreach($business as $b)
-                        <div class="col-6 col-lg-3">
-                            <h3 class="navBox"><a href="{{ $b->content }}" rel="nofollow"
-                                                  style="background-image: url({{ $b->image->path ?? '' }})"
-                                                  title="{{ $b->title }}"><span class="navBox__title"><span
-                                            class="navBox__title__line"></span><span class="navBox__title__subline"></span><span
-                                            class="navBox__title__inner"><span>{{ $b->title }}</span></span></span></a></h3>
-                        </div>
+{{--    <div class="footer__widgets">--}}
+{{--        <div class="container">--}}
+{{--            <div class="footer__widgets__content">--}}
+{{--                <div class="row">--}}
+{{--                    @foreach($business as $b)--}}
+{{--                        <div class="col-6 col-lg-3">--}}
+{{--                            <h3 class="navBox"><a href="{{ $b->content }}" rel="nofollow"--}}
+{{--                                                  style="background-image: url({{ $b->image->path ?? '' }})"--}}
+{{--                                                  title="{{ $b->title }}"><span class="navBox__title"><span--}}
+{{--                                            class="navBox__title__line"></span><span class="navBox__title__subline"></span><span--}}
+{{--                                            class="navBox__title__inner"><span>{{ $b->title }}</span></span></span></a></h3>--}}
+{{--                        </div>--}}
 
-                    @endforeach
-                </div>
-                <style type="text/css">section.pages.pressRelease .contentPost .contentPost__text {
-                        font-family: 'Arial';
-                    }
+{{--                    @endforeach--}}
+{{--                </div>--}}
+{{--                <style type="text/css">section.pages.pressRelease .contentPost .contentPost__text {--}}
+{{--                        font-family: 'Arial';--}}
+{{--                    }--}}
 
-                    section.pages.pressRelease .contentPost .contentPost__text b, section.pages.pressRelease .contentPost .contentPost__text strong {
-                        font-weight: bold;
-                    }
-                </style>
-            </div>
-        </div>
-    </div>
+{{--                    section.pages.pressRelease .contentPost .contentPost__text b, section.pages.pressRelease .contentPost .contentPost__text strong {--}}
+{{--                        font-weight: bold;--}}
+{{--                    }--}}
+{{--                </style>--}}
+{{--            </div>--}}
+{{--        </div>--}}
+{{--    </div>--}}
 
 
     <div class="footer__top">
@@ -179,9 +179,9 @@
                                                                                            alt="Đăng nhập"></i><span>Đăng nhập</span></a>
                         </li>
                         <li class="openAccount"><a target="_blank" href="{{ route('front.register') }}"
-                                                   title="Mở tài khoản"><i><img class="svg"
+                                                   title="Đăng ký"><i><img class="svg"
                                                                                 src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 115 115'%3E%3Cdefs%3E%3Cstyle%3E.cls-1%7Bfill:%23fff%7D%3C/style%3E%3C/defs%3E%3Ctitle%3Eic-dang-ky%3C/title%3E%3Cg id='Layer_2' data-name='Layer 2'%3E%3Cpath class='cls-1' d='M108.81 6.19A21.11 21.11 0 0 0 79 6.18L15.43 69.33a3.59 3.59 0 0 0-.84 1.32L.22 110.18A3.59 3.59 0 0 0 3.6 115a3.48 3.48 0 0 0 1.05-.16l35.75-11a3.35 3.35 0 0 0 1.49-.89l66.92-66.92a21.11 21.11 0 0 0 0-29.87zM36.27 97.63l-13.38 4.11a15.48 15.48 0 0 0-3.65-6 19.65 19.65 0 0 0-4.88-3.45l6.13-16.84h8.26v7.19a3.6 3.6 0 0 0 3.6 3.59h6.34zm52.9-52.09L45.39 89.32l1.25-5.92a3.6 3.6 0 0 0-3.51-4.34h-7.19v-7.18a3.6 3.6 0 0 0-3.59-3.6h-5.67l42.74-42.49a13.94 13.94 0 1 1 19.75 19.75zM103.73 31l-3.35 3.36a21 21 0 0 0-19.73-19.74L84 11.28A13.93 13.93 0 1 1 103.73 31zm-23.61-1.2L44.18 65.74a3.59 3.59 0 1 0 5.08 5.08L85.2 34.88a3.59 3.59 0 0 0-5.08-5.08z' id='Layer_1-2' data-name='Layer 1'/%3E%3C/g%3E%3C/svg%3E"
-                                                                                alt="Mở tài khoản"></i><span>Mở tài khoản</span></a>
+                                                                                alt="Đăng ký"></i><span>Đăng ký</span></a>
                         </li>
                     @endif
 
@@ -194,8 +194,8 @@
                     <li><a href="{{ route('front.home-page') }}" title="Trang chủ"><span>Trang chủ</span></a>
                     <li><a href="{{ route('front.abouts') }}" title="Giới thiệu"><span>Giới thiệu</span></a>
                     </li>
-                    <li><a href="{{ route('front.services') }}" title="Dịch vụ"><span>Dịch vụ</span></a>
-                    </li>
+{{--                    <li><a href="{{ route('front.services') }}" title="Dịch vụ"><span>Dịch vụ</span></a>--}}
+{{--                    </li>--}}
 
                     <li><a title="Tin tức"><span>Tin tức</span></a><a class="arrow" href="#"><i
                                 class="arrow_carrot-down"></i></a>

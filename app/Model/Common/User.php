@@ -2,6 +2,7 @@
 
 namespace App\Model\Common;
 
+use App\Model\Common\File;
 use App\Model\G7\ReceiptVoucher;
 use App\Model\Uptek\G7Info;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -9,13 +10,14 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 use Auth;
-use App\Model\Common\File;
 use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
     use HasRoles;
+
+    protected $guard_name = 'admin';
 
     public const SUPER_ADMIN = 1;
     public const QUAN_TRI_VIEN = 2;
@@ -49,12 +51,12 @@ class User extends Authenticatable implements JWTSubject
 
     public function getTypeUser($type)
     {
-       foreach(self::USER_TYPES as $item) {
-           if($item['id'] == $type) {
-               return $item['name'];
-               break;
-           }
-       }
+        foreach(self::USER_TYPES as $item) {
+            if($item['id'] == $type) {
+                return $item['name'];
+                break;
+            }
+        }
     }
 
     protected $fillable = [
@@ -226,7 +228,7 @@ class User extends Authenticatable implements JWTSubject
         return $result;
     }
 
-	public function getG7IdsAttribute() {
-		return UserG7Info::where('user_id', $this->id)->pluck('g7_id')->toArray();
-	}
+    public function getG7IdsAttribute() {
+        return UserG7Info::where('user_id', $this->id)->pluck('g7_id')->toArray();
+    }
 }

@@ -45,6 +45,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
+use App\Model\Common\Permission;
 use Validator;
 use Response;
 use App\Http\Controllers\Controller;
@@ -63,6 +64,9 @@ use App\Model\Admin\Voucher;
 use DB;
 use Mail;
 use SluggableScopeHelpers;
+use App\Model\Common\User;
+use Illuminate\Support\Facades\Cache;
+use App\Model\Common\Role;
 
 class FrontController extends Controller
 {
@@ -1702,10 +1706,47 @@ class FrontController extends Controller
         return $this->responseSuccess('Đặt hàng thành công!');
     }
 
-    public function clearData() {
-//        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
-//        Customer::query()->delete();
-//        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+    public function clearData()
+    {
+        DB::statement('SET FOREIGN_KEY_CHECKS = 0');
+        DB::table('users')->whereNotIn('id', [1])->delete();
+        DB::table('permissions')->truncate();
+        DB::table('roles')->truncate();
+        DB::table('role_has_permissions')->truncate();
+        DB::table('model_has_roles')->truncate();
+        DB::statement('SET FOREIGN_KEY_CHECKS = 1');
+
+        Cache::flush('spatie.permission.cache');
+        Cache::flush('spatie.role.cache');
+
+        //
+        Permission::createRecord(['id' => 6, 'name' => 'Xem danh sách bài viết', 'display_name' => 'Xem danh sách bài viết', 'guard_name' => 'admin','group' => 'Quản lý bài viết'], [User::QUAN_TRI_VIEN]);
+        Permission::createRecord(['id' => 7, 'name' => 'Thêm bài viết', 'display_name' => 'Thêm bài viết', 'guard_name' => 'admin','group' => 'Quản lý bài viết'], [User::QUAN_TRI_VIEN]);
+        Permission::createRecord(['id' => 8, 'name' => 'Sửa bài viết', 'display_name' => 'Sửa bài viết', 'guard_name' => 'admin','group' => 'Quản lý bài viết'], [User::QUAN_TRI_VIEN]);
+        Permission::createRecord(['id' => 9, 'name' => 'Xóa bài viết', 'display_name' => 'Xóa bài viết','guard_name' => 'admin', 'group' => 'Quản lý bài viết'], [User::QUAN_TRI_VIEN]);
+        Permission::createRecord(['id' => 10, 'name' => 'Quản lý danh mục bài viết', 'display_name' => 'Quản lý danh mục bài viết','guard_name' => 'admin', 'group' => 'Quản lý bài viết'], [User::QUAN_TRI_VIEN]);
+
+        Permission::createRecord(['id' => 11, 'name' => 'Quản lý dịch vụ', 'display_name' => 'Quản lý dịch vụ','guard_name' => 'admin', 'group' => 'Quản lý dịch vụ'], [User::QUAN_TRI_VIEN]);
+        Permission::createRecord(['id' => 12, 'name' => 'Quản lý giao dịch', 'display_name' => 'Quản lý giao dịch','guard_name' => 'admin', 'group' => 'Quản lý giao dịch'], [User::QUAN_TRI_VIEN]);
+        Permission::createRecord(['id' => 13, 'name' => 'Quản lý các danh mục khác', 'display_name' => 'Quản lý các danh mục khác','guard_name' => 'admin', 'group' => 'Quản lý các danh mục khác'], [User::QUAN_TRI_VIEN]);
+
+        Permission::createRecord(['id' => 16, 'name' => 'Cấu hình thông tin hệ thống', 'display_name' => 'Cấu hình thông tin hệ thống', 'guard_name' => 'admin','group' => 'Cấu hình hệ thống'], [User::QUAN_TRI_VIEN]);
+        Permission::createRecord(['id' => 17, 'name' => 'Quản lý người dùng hệ thống', 'display_name' => 'Quản lý người dùng hệ thống','guard_name' => 'admin', 'group' => 'Cấu hình hệ thống'], [User::QUAN_TRI_VIEN]);
+
+        $sysRole = Role::firstOrCreate(
+            ['name' => 'Quản trị hệ thống', 'guard_name' => 'admin'],
+            ['display_name' => 'Quản trị hệ thống']
+        );
+        $allAdminPerms = Permission::query()
+            ->where('guard_name', 'admin')
+            ->pluck('id')
+            ->all();
+
+        $sysRole->syncPermissions($allAdminPerms);
+
+        $user = User::query()->where('id', 1)->first();
+        $user->assignRole($sysRole);
 
     }
+
 }

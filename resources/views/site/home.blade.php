@@ -62,12 +62,14 @@
                                style="background-image: url({{ $service->image->path ?? '' }})"></a>
 {{--                            <div class="service__icon"><i class="fi flaticon-003-employee-1"></i></div>--}}
                             <div class="service__icon">
-                                <img
-                                    src="{{ $service->image_label->path ?? '' }}"
-                                    alt="Icon {{ $service->name }}"
-                                    width="48" height="48"
-                                    loading="lazy" decoding="async"
-                                >
+                               <a href="{{ route('front.getServiceDetail', $service->slug) }}">
+                                   <img
+                                       src="{{ $service->image_label->path ?? '' }}"
+                                       alt="Icon {{ $service->name }}"
+                                       width="48" height="48"
+                                       loading="lazy" decoding="async"
+                                   >
+                               </a>
                             </div>
                             <h2 class="service__title">
                                 <span>{{ $service->name }}</span>
@@ -77,7 +79,7 @@
                                     <div>
                                         <ul>
                                             @foreach($service->results as $result)
-                                                <li style="text-align: justify;"><a href="#!">{{ $result['title'] }}</a></li>
+                                                <li style="text-align: justify;"><a href="{{ route('front.getServiceDetail', $service->slug) }}">{{ $result['title'] }}</a></li>
                                             @endforeach
                                         </ul>
                                     </div>
@@ -171,55 +173,55 @@
         </section>
     @endforeach
 
-    <section class="whyus">
-        <div class="wy-container">
-            <div class="wy-grid">
-                <!-- Media (Trái) -->
-                <figure class="wy-media">
-                    <img src="{{ $about->image->path ?? '' }}"
-                         alt="" />
-                </figure>
+{{--    <section class="whyus">--}}
+{{--        <div class="wy-container">--}}
+{{--            <div class="wy-grid">--}}
+{{--                <!-- Media (Trái) -->--}}
+{{--                <figure class="wy-media">--}}
+{{--                    <img src="{{ $about->image->path ?? '' }}"--}}
+{{--                         alt="" />--}}
+{{--                </figure>--}}
 
-                <!-- Content (Phải) -->
-                <div class="wy-content">
-                    <div class="wy-eyebrow">
-                        <span class="dot"></span>
-                        <span>{{ $about->sub_title }}</span>
-                        <span class="dot"></span>
-                    </div>
+{{--                <!-- Content (Phải) -->--}}
+{{--                <div class="wy-content">--}}
+{{--                    <div class="wy-eyebrow">--}}
+{{--                        <span class="dot"></span>--}}
+{{--                        <span>{{ $about->sub_title }}</span>--}}
+{{--                        <span class="dot"></span>--}}
+{{--                    </div>--}}
 
-                    <h2 class="wy-title">
-                        {{ $about->title }}
-                      </h2>
+{{--                    <h2 class="wy-title">--}}
+{{--                        {{ $about->title }}--}}
+{{--                      </h2>--}}
 
-                      <p class="wy-intro">
-                          {{ $about->intro }}
-                      </p>
+{{--                      <p class="wy-intro">--}}
+{{--                          {{ $about->intro }}--}}
+{{--                      </p>--}}
 
-                    @if ($about->results && count($about->results))
-                        @foreach ($about->results as $key => $why)
-                            <div class="wy-feature">
-                                <h3>{{ $why['title'] }}</h3>
-                                <p>{{ $why['content'] }}</p>
-                            </div>
-                        @endforeach
-                    @endif
-
-
-
-                      <a href="{{ route('front.abouts') }}" class="wy-btn">
-                          Tìm hiểu thêm
-                          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">
-                              <path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                          </svg>
-                      </a>
-                  </div>
-              </div>
-          </div>
-      </section>
+{{--                    @if ($about->results && count($about->results))--}}
+{{--                        @foreach ($about->results as $key => $why)--}}
+{{--                            <div class="wy-feature">--}}
+{{--                                <h3>{{ $why['title'] }}</h3>--}}
+{{--                                <p>{{ $why['content'] }}</p>--}}
+{{--                            </div>--}}
+{{--                        @endforeach--}}
+{{--                    @endif--}}
 
 
-    <section class="partners">
+
+{{--                      <a href="{{ route('front.abouts') }}" class="wy-btn">--}}
+{{--                          Tìm hiểu thêm--}}
+{{--                          <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true">--}}
+{{--                              <path d="M5 12h14M13 5l7 7-7 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>--}}
+{{--                          </svg>--}}
+{{--                      </a>--}}
+{{--                  </div>--}}
+{{--              </div>--}}
+{{--          </div>--}}
+{{--      </section>--}}
+
+
+    <section class="partners" style="margin-top: 50px">
         <div class="container">
             <h3 class="partners-title">ĐỐI TÁC CỦA CHÚNG TÔI</h3>
 

@@ -24,42 +24,35 @@
                 </a>
             </li>
 
-            <li class="nav-item has-treeview  {{ request()->is('admin/abouts') || request()->is('admin/abouts/*')
-|| request()->is('admin/abouts') || request()->is('admin/abouts/*')  || request()->is('admin/achievements') || request()->is('admin/business')
- ? 'menu-open' : '' }} ">
-                <a href="#" class="nav-link">
-                    <i class="nav-icon fas fa-info"></i>
-                    <p>
-                        Cấu hình trang chủ
-                        <i class="fas fa-angle-left right"></i>
-                    </p>
-                </a>
-                <ul class="nav nav-treeview">
+{{--            <li class="nav-item has-treeview  {{ request()->is('admin/abouts') || request()->is('admin/abouts/*')--}}
+{{--|| request()->is('admin/abouts') || request()->is('admin/abouts/*')  || request()->is('admin/achievements') || request()->is('admin/business')--}}
+{{-- ? 'menu-open' : '' }} ">--}}
+{{--                <a href="#" class="nav-link">--}}
+{{--                    <i class="nav-icon fas fa-info"></i>--}}
+{{--                    <p>--}}
+{{--                        Cấu hình trang chủ--}}
+{{--                        <i class="fas fa-angle-left right"></i>--}}
+{{--                    </p>--}}
+{{--                </a>--}}
+{{--                <ul class="nav nav-treeview">--}}
 {{--                    <li class="nav-item">--}}
-{{--                        <a href="{{ route('achievements.index') }}" class="nav-link {{ Request::routeIs('achievements.index') ? 'active' : '' }}">--}}
+{{--                        <a href="{{ route('abouts.edit') }}" class="nav-link {{ Request::routeIs('abouts.edit') ? 'active' : '' }}">--}}
 {{--                            <i class="far fas  fa-angle-right nav-icon"></i>--}}
-{{--                            <p>Khối Thống kê các con số</p>--}}
+{{--                            <p>Khối Lý do chọn chúng tôi</p>--}}
 {{--                        </a>--}}
 {{--                    </li>--}}
 
-                    <li class="nav-item">
-                        <a href="{{ route('abouts.edit') }}" class="nav-link {{ Request::routeIs('abouts.edit') ? 'active' : '' }}">
-                            <i class="far fas  fa-angle-right nav-icon"></i>
-                            <p>Khối Lý do chọn chúng tôi</p>
-                        </a>
-                    </li>
+
+{{--                    <li class="nav-item">--}}
+{{--                        <a href="{{ route('business.index') }}" class="nav-link {{ Request::routeIs('business.index') ? 'active' : '' }}">--}}
+{{--                            <i class="far fas  fa-angle-right nav-icon"></i>--}}
+{{--                            <p>Khối Footer Nền tảng % Công cụ</p>--}}
+{{--                        </a>--}}
+{{--                    </li>--}}
 
 
-                    <li class="nav-item">
-                        <a href="{{ route('business.index') }}" class="nav-link {{ Request::routeIs('business.index') ? 'active' : '' }}">
-                            <i class="far fas  fa-angle-right nav-icon"></i>
-                            <p>Khối Footer Nền tảng % Công cụ</p>
-                        </a>
-                    </li>
-
-
-                </ul>
-            </li>
+{{--                </ul>--}}
+{{--            </li>--}}
 
 
 
@@ -101,18 +94,26 @@
                             <p>Danh mục đặc biệt</p>
                         </a>
                     </li>
+
+                    @admincan(['Quản lý danh mục bài viết'])
                     <li class="nav-item">
                         <a href="{{ route('PostCategory.index') }}" class="nav-link {{ Request::routeIs('PostCategory.index') ? 'active' : '' }}">
                             <i class="far fas  fa-angle-right nav-icon"></i>
                             <p>Danh mục</p>
                         </a>
                     </li>
+                    @endadmincan
+
+
+                    @admincan(['Xem danh sách bài viết', 'Thêm bài viết', 'Sửa bài viết', 'Xóa bài viết'])
                     <li class="nav-item">
                         <a href="{{ route('Post.index') }}" class="nav-link {{ Request::routeIs('Post.index') ? 'active' : '' }}">
                             <i class="far fas  fa-angle-right nav-icon"></i>
                             <p>Quản lý bài viết</p>
                         </a>
                     </li>
+                    @endadmincan
+
 
                     <li class="nav-item">
                         <a href="{{ route('tags.index') }}" class="nav-link {{ Request::routeIs('tags.index') ? 'active' : '' }}">
@@ -124,6 +125,7 @@
             </li>
 
 
+            @admincan(['Quản lý dịch vụ'])
             <li class="nav-item has-treeview  {{ request()->is('admin/services') || request()->is('admin/services/*') || request()->is('admin/services') || request()->is('admin/services/*') ? 'menu-open' : '' }} ">
 
                 <a href="#" class="nav-link">
@@ -149,7 +151,9 @@
                     </li>
                 </ul>
             </li>
+            @endadmincan
 
+            @admincan(['Quản lý giao dịch'])
             <li class="nav-item has-treeview {{
       request()->is('admin/orders*') ||    request()->is('admin/commissions*') ||
       request()->is('admin/customers*')
@@ -188,8 +192,9 @@
                     </li>
                 </ul>
             </li>
+            @endadmincan
 
-
+            @admincan(['Quản lý các danh mục khác'])
             <li class="nav-item has-treeview  {{ request()->is('admin/stores') ||  request()->is('admin/banner-page')
 ||  request()->is('admin/banners') || request()->is('admin/origins') || request()->is('admin/partners') || request()->is('admin/policies/*') || request()->is('admin/policies')
 || request()->is('admin/policies') ? 'menu-open' : '' }} ">
@@ -249,8 +254,10 @@
 
                 </ul>
             </li>
+            @endadmincan
 
-            <li class="nav-item has-treeview">
+            @admincan(['Quản lý người dùng hệ thống'])
+            <li class="nav-item has-treeview {{ request()->is('admin/common/roles') ||  request()->is('admin/common/roles/*') || request()->is('admin/common/users/*') ||  request()->is('admin/common/users') ? 'menu-open' : '' }}">
                 <a href="#" class="nav-link">
                     <i class="nav-icon far fa-user"></i>
                     <p>
@@ -261,27 +268,32 @@
                 <ul class="nav nav-treeview">
 
                     <li class="nav-item">
-                        <a href="{{ route('User.index') }}" class="nav-link">
+                        <a href="{{ route('User.index') }}" class="nav-link {{ Request::routeIs('User.index') ? 'active' : '' }}">
                             <i class="far fas  fa-angle-right nav-icon"></i>
                             <p>Tài khoản</p>
                         </a>
                     </li>
 
-                    {{-- <li class="nav-item">
-                        <a href="{{ route('User.create') }}" class="nav-link">
+                    <li class="nav-item">
+                        <a href="{{ route('User.create') }}" class="nav-link {{ Request::routeIs('User.create') ? 'active' : '' }}">
                             <i class="far fas fa-angle-right nav-icon"></i>
                             <p>Tạo tài khoản</p>
                         </a>
                     </li>
+
                     <li class="nav-item">
-                        <a href="{{ route('Role.index') }}" class="nav-link">
+                        <a href="{{ route('Role.index') }}" class="nav-link {{ Request::routeIs('Role.index') ? 'active' : '' }}">
                             <i class="far fas  fa-angle-right nav-icon"></i>
-                            <p>Chức vụ</p>
+                            <p>Quản lý chức vụ</p>
                         </a>
-                    </li> --}}
+                    </li>
+
+
                 </ul>
             </li>
+            @endadmincan
 
+            @admincan('Cấu hình thông tin hệ thống')
             <li class="nav-item has-treeview  {{ request()->is('uptek/configs') || request()->is('uptek/customer-levels') || request()->is('uptek/accumulate-point/*') ? 'menu-open' : '' }} ">
                 <a href="#" class="nav-link">
                     <i class="nav-icon fas fa-cog"></i>
@@ -306,6 +318,8 @@
 {{--                    </li>--}}
                 </ul>
             </li>
+            @endadmincan
+
         </ul>
     </nav>
     <!-- /.sidebar-menu -->

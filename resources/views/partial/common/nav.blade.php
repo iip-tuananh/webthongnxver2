@@ -80,6 +80,13 @@
 				<div class="dropdown-divider"></div>
 			</div>
 		</li>
+
+        <li class="nav-item" ng-cloak>
+            <a class="nav-link" href="{{ route('Account.edit', auth()->user()->id) }}" title="Tài khoản" aria-label="Tài khoản">
+                <i class="far fa-user-circle" style="font-size: 32px !important;"></i>
+            </a>
+        </li>
+
 		<li class="nav-item">
 			<a class="nav-link" href="{{ route('logout') }}">
 				<i class="fas fa-sign-out-alt"></i>
