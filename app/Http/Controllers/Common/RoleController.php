@@ -35,13 +35,13 @@ class RoleController extends Controller
 
         return Datatables::of($objects)
             ->editColumn('updated_by', function ($object) {
-                return $object->user_update->fullname;
+                return @$object->user_update->name ?? '';
             })
             ->editColumn('name', function ($object) {
                 return $object->display_name ?: $object->name;
             })
             ->editColumn('created_by', function ($object) {
-                return $object->user_create->name;
+                return @$object->user_create->name ?? '';
             })
             ->editColumn('created_at', function ($object) {
                 return Carbon::parse($object->created_at)->format("d/m/Y");
