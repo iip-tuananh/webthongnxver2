@@ -1,5 +1,5 @@
 <link rel="preload" href="/site/frontend/assets/css/clone-heading.css" as="style">
-<link rel="preload" href="/site/frontend/assets/css/styles.min3cc5.css?v=2.6" as="style">
+<link rel="preload" href="/site/frontend/assets/css/styles.min3cc5.css?v=3.6" as="style">
 <link rel="preload" href="/site/frontend/assets/css/banner-home-pagec619.css?v=1.0" as="style">
 <link rel="preload" href="/site/frontend/assets/fonts/ArialMTviet.html" as="font" crossorigin>
 <link rel="preload" href="/site/frontend/assets/fonts/UVNHongHaHepBold.html" as="font" crossorigin>

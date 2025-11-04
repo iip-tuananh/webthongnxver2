@@ -11523,7 +11523,7 @@ input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="butto
 }
 
 .navbar h1 {
-    display: inline-block;
+    /*display: inline-block;*/
     font-size: 1em;
     margin: 0
 }

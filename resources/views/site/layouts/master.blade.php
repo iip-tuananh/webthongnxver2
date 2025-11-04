@@ -307,6 +307,10 @@
 
     </script>
 
+
+
+
+
     @stack('scripts')
 </body>
 

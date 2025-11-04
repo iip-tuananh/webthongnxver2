@@ -1,3 +1,70 @@
+<style>
+    /* Căn dòng logo + date-badge trên 1 hàng */
+    .brand-row {
+        display: flex;
+        align-items: center;
+        gap: clamp(10px, 2vw, 20px);
+        margin: 0; /* h1 mặc định có margin */
+    }
+
+    /* Badge nền tối, bo góc nhẹ */
+    .date-badge{
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #cf1414;
+        color: #fff;
+        border-radius: 6px;
+        padding: 6px 10px;
+        line-height: 1;
+        user-select: none;
+    }
+
+    /* Số ngày thật to */
+    .date-badge__day{
+        font-weight: 700;
+        font-size: clamp(18px, 4vw, 34px);   /* responsive */
+    }
+
+    /* Cột phải xếp dọc */
+    .date-badge__right{
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: center;
+    }
+
+    /* Tháng & năm */
+    .date-badge__month{
+        font-size: clamp(10px, 1.6vw, 12px);
+        letter-spacing: 0.08em;
+        font-weight: 700;
+    }
+
+    .date-badge__year{
+        font-size: clamp(10px, 1.6vw, 12px);
+        opacity: 0.9;
+    }
+
+    /* Tối ưu khoảng cách ảnh logo */
+    .navbar-brand img{
+        /*display:block;*/
+        /*max-height: clamp(28px, 5vw, 44px);*/
+        /*height: auto;*/
+    }
+
+    /* Khi rất hẹp (<=360px), thu nhỏ badge để không vỡ layout */
+    @media (max-width: 360px){
+        .date-badge{ transform: scale(0.9); transform-origin: left center; }
+    }
+
+    @media (max-width: 991px) {
+        .date-badge {
+            margin-top: .71429em;
+        }
+    }
+
+</style>
 <header class="navbar" ng-controller="headerPartial">
     <div class="container">
         <a class="navbar-toggle" href="#">
@@ -6,10 +73,28 @@
             <span></span>
             <span></span>
         </a>
-        <h1>
+        <h1 class="brand-row">
             <a class="navbar-brand" href="{{ route('front.home-page') }}"> <img src="{{ $config->image->path ?? '' }}"></a>
             <span class="sr-only">{{ $config->web_title }}</span>
+
+            @php
+                use Carbon\Carbon;
+                $now   = Carbon::now(config('app.timezone', 'Asia/Ho_Chi_Minh'));
+                $day   = $now->day;
+                $month = strtoupper($now->format('M'));
+                $year  = $now->year;
+            @endphp
+
+            <div class="date-badge" aria-label="Current date">
+                <div class="date-badge__day"   id="db-day">{{ $day }}</div>
+                <div class="date-badge__right">
+                    <div class="date-badge__month" id="db-month">{{ $month }}</div>
+                    <div class="date-badge__year"  id="db-year">{{ $year }}</div>
+                </div>
+            </div>
         </h1>
+
+
     </div>
 
     <style>
