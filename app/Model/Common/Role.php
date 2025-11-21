@@ -34,7 +34,6 @@ class Role extends BaseRole
     }
 
     public function canDelete() {
-        if (!in_array($this->type, Auth::user()->getAccessTypes())) return false;
         $user_count = ModelHasRole::where('role_id', $this->id)->count();
         if ($user_count > 0) return false;
         return true;
